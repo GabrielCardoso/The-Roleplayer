@@ -1,6 +1,5 @@
 package theroleplayer.system;
 import theroleplayer.classes.*;
-import theroleplayer.primaryattributes.*;
 
 public class Player {
 	
