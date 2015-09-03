@@ -1,12 +1,15 @@
 package theroleplayer.system;
+
 import theroleplayer.classes.*;
+import theroleplayer.primaryattributes.*;
+import theroleplayer.secondaryattributes.*;
 
 public class Player {
 	
-	public static final double EXPTOLEVEL_FACTOR = 1.2;
+	public static final double EXPTOLEVEL_FACTOR = 1.05;
 	public static final int LEVELCAP = 60;
 	
-	public Player(String classe, int level) {
+	public Player(String name, String classe, int level) {
 		switch(classe) {
 			case "acolyte":
 			case "Acolyte":
@@ -50,16 +53,26 @@ public class Player {
 				break;
 		}
 		
-		this.level = level;
+		this.setName(name);
+		this.setLevel(level);
+		this.setExpToLevel();
 		System.out.println("Player created.");
 	}
 	
 	private String name;
 	private int exp;
-	private double expToLevel = this.level*100.0;
+	private double expToLevel;
 	private int level;
 	private Classe classe;
-
+	
+	private Strength str = new Strength();
+	private Constitution con = new Constitution();
+	private Dexterity dex = new Dexterity();
+	private Intelligence intel = new Intelligence();
+	private Wisdom wis = new Wisdom();
+	
+	private HealthPoints hp = new HealthPoints();
+	private ManaPoints mp = new ManaPoints();
 	
 	//-------------- METHODS --------------//
 	public void gainExp(int x) {
@@ -80,6 +93,7 @@ public class Player {
 	
 	private void levelAttributes() {
 		//updating attributes after leveling
+		System.out.println("You leveled up!");
 	}
 	
 	//-------------- SETTERS --------------//
@@ -94,8 +108,10 @@ public class Player {
 	public void setLevel(int x) {
 		if(x <= 0 || x > LEVELCAP)
 			System.out.println("Insert a number between 1 and the level cap.");
-		else
+		else {
 			this.level = x;
+			this.setExpToLevel();
+		}
 	}
 
 	private void setExp(int x) {
@@ -106,7 +122,10 @@ public class Player {
 	}
 	
 	private void setExpToLevel() {
-		this.expToLevel = Math.pow(this.level*100.0, EXPTOLEVEL_FACTOR);
+		if(this.level == 1) 
+			this.expToLevel = 100.0;
+		else 
+			this.expToLevel = Math.pow(this.level*100.0, EXPTOLEVEL_FACTOR);
 	}
 	
 	//-------------- GETTERS --------------//
