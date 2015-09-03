@@ -1,7 +1,11 @@
 package theroleplayer.system;
 import theroleplayer.classes.*;
+import theroleplayer.primaryattributes.*;
 
 public class Player {
+	
+	public static final double EXPTOLEVEL_FACTOR = 1.2;
+	public static final int LEVELCAP = 60;
 	
 	public Player(String classe, int level) {
 		switch(classe) {
@@ -35,29 +39,43 @@ public class Player {
 				this.classe = new Warrior();
 				break;
 				
+			case "gamemaster":
+			case "gameMaster":
+			case "Gamemaster":
+			case "GameMaster":
+				this.classe = new GameMaster();
+				break;
+				
 			default:
-				System.out.println("Insert a valid class");
+				System.out.println("Insert a valid class.");
+				break;
 		}
 		
 		this.level = level;
+		System.out.println("Player created.");
 	}
-	
-	public static final double EXPTOLEVEL_FACTOR = 1.2;
 	
 	private String name;
 	private int exp;
 	private double expToLevel = this.level*100.0;
 	private int level;
 	private Classe classe;
+
 	
 	//-------------- METHODS --------------//
 	public void gainExp(int x) {
-		this.exp += x;
-		if(this.exp >= expToLevel) {
-			this.level++;
-			this.exp = 0;
-			this.expToLevel = Math.pow(this.level*100.0, EXPTOLEVEL_FACTOR);
-			this.levelAttributes();
+		if(this.level == LEVELCAP) {
+			System.out.println("Level cap reached.");
+		}
+			
+		else {
+			this.exp += x;
+			if(this.exp >= expToLevel) {
+				this.setLevel(this.level+1);
+				this.setExp(0);
+				this.setExpToLevel();
+				this.levelAttributes();
+			}
 		}
 	}
 	
@@ -73,18 +91,23 @@ public class Player {
 			System.out.println("Insert a name between 3 and 10 letters.");
 	}
 	
-	public void setExp(int x) {
+	
+	public void setLevel(int x) {
+		if(x <= 0 || x > LEVELCAP)
+			System.out.println("Insert a number between 1 and the level cap.");
+		else
+			this.level = x;
+	}
+
+	private void setExp(int x) {
 		if(x < 0)
 			System.out.println("Only positive numbers are valid.");
 		else
 			this.exp = x;
 	}
 	
-	public void setLevel(int x) {
-		if(x < 0)
-			System.out.println("Only positive numbers are valid.");
-		else
-			this.level = x;
+	private void setExpToLevel() {
+		this.expToLevel = Math.pow(this.level*100.0, EXPTOLEVEL_FACTOR);
 	}
 	
 	//-------------- GETTERS --------------//
