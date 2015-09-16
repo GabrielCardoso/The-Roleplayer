@@ -18,6 +18,14 @@ public abstract class Vitals {
 		}
 	}
 	
+	public void setCurrentVal(int x) {
+		if(x<0 || x>this.maxVal)
+			System.out.println("Insert a positive number between 0 and " + this.getMaxVal() + ".");
+		else {
+			this.currentVal = x;	
+		}
+	}
+	
 	//-------------- GETTERS --------------//
 	public int getMaxVal() {
 		return this.maxVal;

@@ -71,7 +71,7 @@ public class Player {
 	private Intelligence intel = new Intelligence();
 	private Wisdom wis = new Wisdom();
 	
-	private HealthPoints hp = new HealthPoints();
+	public HealthPoints hp = new HealthPoints();
 	private ManaPoints mp = new ManaPoints();
 	
 	//-------------- METHODS --------------//

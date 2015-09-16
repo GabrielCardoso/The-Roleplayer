@@ -1,32 +1,34 @@
 package theroleplayer.secondaryattributes;
 
 public class HealthPoints extends Vitals {
-	private int currentVal;
-	private int maxVal;
 	
 	//-------------- METHODS --------------//
 	public void takeDamage(int x) {
-		if(x>this.currentVal) {
+		if(x>this.getCurrentVal()) {
 			System.out.println("You are dead.");
 		}
 		else {
-			this.currentVal -= x;
+			this.setCurrentVal(this.getCurrentVal() - x);
 			System.out.println("You took " + x + " damage.");
+			if(this.getCurrentVal() <= 0)
+			{
+				System.out.println("You are dead.");
+			}
 		}
 	}
 	
 	public void takeHeal(int x) {
-		if(this.currentVal >= this.maxVal) {
+		if(this.getCurrentVal() >= this.getMaxVal()) {
 			System.out.println("Can't heal above your maximum HP.");
 		}
 		
 		else {
-			if(x + this.currentVal >= this.maxVal) {
-				this.currentVal = this.maxVal;
+			if(x + this.getCurrentVal() >= this.getMaxVal()) {
+				this.setCurrentVal(this.getMaxVal());
 				System.out.println("You are at full HP.");
 			}
 			else {
-				this.currentVal += x;
+				this.setCurrentVal(this.getCurrentVal() + x);
 				System.out.println("Received " + x + " HP from healing.");
 			}
 		}
